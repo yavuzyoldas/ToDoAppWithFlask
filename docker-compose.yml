@@ -1,0 +1,47 @@
+version: '3'
+services:
+  app:
+    build: app/.
+    networks: 
+      - main_nw
+    depends_on:
+      - database
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=todo_database
+    ports:
+      - "5802:5802"
+  database:
+    container_name: database
+    image: postgres
+    networks:
+      - main_nw
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=todo_database
+    volumes:
+      - database_data:/var/lib/postgresql/data/
+  pgadmin:
+    image: dpage/pgadmin4:4.18
+    restart: always
+    networks:
+      - main_nw
+    environment:
+     PGADMIN_DEFAULT_EMAIL: admin@gmail.com
+     PGADMIN_DEFAULT_PASSWORD: 123456
+     PGADMIN_LISTEN_PORT: 80
+    ports:
+     - "8080:80"
+    volumes:
+     - pgadmin-data:/var/lib/pgadmin
+    links:
+     - "database:pgsql-server"  
+networks:
+  main_nw:
+volumes:
+  database_data:
+  pgadmin-data:  

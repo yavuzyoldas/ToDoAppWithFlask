@@ -17,12 +17,12 @@ Base = declarative_base()
 Base.query = db_session.query_property()
 
 def init_db():
-    if not engine.dialect.has_table(engine, "todos"):  # If table don't exist, Create.
-        print("creating tables first time.............")
+    if not engine.dialect.has_table(engine, "todos"):  
+        print("creating table first time.............")
         import models
         Base.metadata.create_all(bind=engine)
     else:
-        print("tables are already created.............")
+        print("tables is already created.............")
 
 
 

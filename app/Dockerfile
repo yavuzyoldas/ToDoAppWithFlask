@@ -12,8 +12,6 @@ ADD requirements.txt /app
 
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
-RUN pip install Flask-SQLAlchemy
-
 
 # Copy the current directory contents into the container at /app
 ADD . /app

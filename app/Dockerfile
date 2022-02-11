@@ -1,23 +1,19 @@
+#Base Image belirtmek için kullanılan bir Dockerfile komutudur.
 FROM python:3.6
 
-RUN apt-get update && \
-    apt-get install -y jq && \
-    apt-get install -y grep && \
-    apt-get install -y netcat
-
-# Set the working directory to /app
+# Çalışma dizinini /app olarak ayarlar. Container üzerinde çalıştırılacak olan komutların nerede çalışacağını belirtir.
 WORKDIR /app
-
+# requirements.txt dosyasını /app dizinine ekler.
 ADD requirements.txt /app
 
-# Install any needed packages specified in requirements.txt
+# requirements.txt dosyasında belirtilen tüm gerekli paketleri kurulur
 RUN pip install -r requirements.txt
 
-# Copy the current directory contents into the container at /app
+# Geçerli dizin içeriğini /app adresindeki kapsayıcıya kopyalar
 ADD . /app
 
-# Make port 80 available to the world outside this container
+# 5802 numaralı portu konteynır için açar. 
 EXPOSE 5802
 
-# Run app.py when the container launches
+# Container başlatıldığında todo.py dosyası çalıştırılır.
 CMD ["python","todo.py"]
